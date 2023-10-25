@@ -6,6 +6,13 @@ namespace Nagoyaphp21\App;
 
 class App
 {
+    public function __construct(
+        private readonly OperatorCombinationFactory $operatorCombinationFactory,
+        private readonly Calculator $calculator,
+        private readonly ExpressionBuilder $expressionBuilder,
+    ) {
+    }
+
     /**
      * @param array<int> $inputs
      * @param int $expected
@@ -13,6 +20,21 @@ class App
      */
     public function run(array $inputs, int $expected): string|null
     {
-        return null;
+        $combinations = $this->operatorCombinationFactory->create(count($inputs));
+
+        $expression = null;
+        foreach ($combinations as $combination) {
+            try {
+                if ($expected === $this->calculator->calculate($inputs, $combination)) {
+                    $expression = $this->expressionBuilder->build($inputs, $combination);
+                    break;
+                }
+            } catch (\DivisionByZeroError) {
+                // 0除算が発生したらそのcombinationは違うので飛ばす
+                continue;
+            }
+        }
+
+        return $expression;
     }
 }
