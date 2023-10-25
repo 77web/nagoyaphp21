@@ -15,7 +15,6 @@ class Calculator
     {
         $cursor = $inputs[array_key_first($inputs)];
         for ($i = 1; $i < count($inputs); $i++) {
-            // かっこ考慮したい
             $operator = array_shift($operatorCombination);
             $cursor = $operator->operate($cursor, $inputs[$i]);
         }

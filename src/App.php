@@ -22,6 +22,9 @@ class App
     {
         $combinations = $this->operatorCombinationFactory->create(count($inputs));
 
+        // TODO: $inputsを並べ替える
+        // TODO: 演算子の後ろのかっこに対応
+
         $expression = null;
         foreach ($combinations as $combination) {
             try {
