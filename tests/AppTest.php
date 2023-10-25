@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace Nagoyaphp21\App;
 
+use Nagoyaphp21\App\Operator\Hiku;
+use Nagoyaphp21\App\Operator\Kakeru;
+use Nagoyaphp21\App\Operator\Tasu;
+use Nagoyaphp21\App\Operator\Waru;
 use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
 {
-    protected App $app;
-
-    protected function setUp(): void
-    {
-        $this->app = new App();
-    }
-
     /**
      * @dataProvider provideTestData
      */
     public function test(array $inputs, int $expected): void
     {
-        $app = new App();
+        $app = new App(
+            new OperatorCombinationFactory([new Tasu(), new Hiku(), new Waru(), new Kakeru()]),
+            new Calculator(),
+            new ExpressionBuilder(),
+        );
         $expression = $app->run($inputs, $expected);
 
         $this->assertNotNull($expression);
