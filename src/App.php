@@ -25,7 +25,7 @@ class App
         $expression = null;
         foreach ($combinations as $combination) {
             try {
-                if ($expected === $this->calculator->calculate($inputs, $combination)) {
+                if ($this->isEqual($expected, $this->calculator->calculate($inputs, $combination))) {
                     $expression = $this->expressionBuilder->build($inputs, $combination);
                     break;
                 }
@@ -36,5 +36,11 @@ class App
         }
 
         return $expression;
+    }
+
+    // https://github.com/ttskch/nagoyaphp21/blob/main/templates/hard.php#L145-L149
+    private function isEqual(int|float $a, int|float $b): bool
+    {
+        return abs($a - $b) < 0.0001;
     }
 }
