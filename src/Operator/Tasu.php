@@ -8,7 +8,7 @@ use Nagoyaphp21\App\OperatorInterface;
 
 class Tasu implements OperatorInterface
 {
-    public function operate(int $first, int $second): int|float
+    public function operate(int|float $first, int|float $second): int|float
     {
         return $first + $second;
     }
