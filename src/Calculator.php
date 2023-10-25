@@ -13,14 +13,11 @@ class Calculator
      */
     public function calculate(array $inputs, array $operatorCombination): int|float
     {
-        $cursor = 0;
-        foreach ($inputs as $input) {
-            if ($cursor === 0) {
-                $cursor += $input;
-            } else {
-                $operator = array_shift($operatorCombination);
-                $cursor = $operator->operate($cursor, $input);
-            }
+        $cursor = $inputs[array_key_first($inputs)];
+        for ($i = 1; $i < count($inputs); $i++) {
+            // かっこ考慮したい
+            $operator = array_shift($operatorCombination);
+            $cursor = $operator->operate($cursor, $inputs[$i]);
         }
 
         return $cursor;
